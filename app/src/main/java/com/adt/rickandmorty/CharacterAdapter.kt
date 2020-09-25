@@ -1,12 +1,18 @@
 package com.adt.rickandmorty
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
-class CharacterAdapter (private val myDataset: Array<Result>) :
+
+class CharacterAdapter (var dataset: Array<Result>, val context: Context) :
     RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -19,23 +25,38 @@ class CharacterAdapter (private val myDataset: Array<Result>) :
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): CharacterAdapter.MyViewHolder {
-        // create a new view
         val layout = LayoutInflater.from(parent.context)
             .inflate(R.layout.character_view, parent, false) as LinearLayout
-        // set the view's size, margins, paddings and layout parameters
+
+
 
         return MyViewHolder(layout)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+        val name = "Name: " + dataset[position].name
+        val status = "Status: " + dataset[position].status
+        val species = "Species: " + dataset[position].species
 
-        holder.layout.findViewById<TextView>(R.id.character_name).text = "test"
+        holder.layout.findViewById<TextView>(R.id.character_name).text = name
+        holder.layout.findViewById<TextView>(R.id.character_status).text = status
+        holder.layout.findViewById<TextView>(R.id.character_species).text = species
+
+        holder.layout.setOnClickListener {
+            val location = dataset[position].location?.name
+            AlertDialog.Builder(context).setTitle("Location").setMessage(location).show()
+        }
+
+        val imageView = holder.layout.findViewById<ImageView>(R.id.character_image)
+        val url = dataset[position].image
+        Glide.with(context).load(url).into(imageView)
+    }
+
+    fun updateData(dataset: Array<Result>) {
+        this.dataset = dataset.copyOf()
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-//    override fun getItemCount() = myDataset.size
-    override fun getItemCount() = 10
+    override fun getItemCount() = dataset.size
 }

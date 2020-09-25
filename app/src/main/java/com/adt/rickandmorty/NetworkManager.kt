@@ -22,7 +22,6 @@ class NetworkManager(private val context: Context, private val responseHandler: 
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 val root = Gson().fromJson(response, Root::class.java)
-                Log.e(TAG, "Got root")
                 responseHandler.onDataLoaded(root)
             },
             Response.ErrorListener {
