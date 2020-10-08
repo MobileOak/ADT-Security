@@ -1,4 +1,4 @@
-package com.adt.rickandmorty
+package com.mobileoak.rickandmorty
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

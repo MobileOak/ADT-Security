@@ -1,4 +1,4 @@
-package com.adt.rickandmorty
+package com.mobileoak.rickandmorty
 
 import android.content.Context
 import android.util.Log

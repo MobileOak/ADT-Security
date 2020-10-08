@@ -1,11 +1,8 @@
-package com.adt.rickandmorty
+package com.mobileoak.rickandmorty
 
 import java.util.*
 
-// import com.fasterxml.jackson.databind.ObjectMapper; // version 2.11.1
-// import com.fasterxml.jackson.annotation.JsonProperty; // version 2.11.1
-/* ObjectMapper om = new ObjectMapper();
-Root root = om.readValue(myJsonString), Root.class); */
+
 class Info {
     var count = 0
     var pages = 0

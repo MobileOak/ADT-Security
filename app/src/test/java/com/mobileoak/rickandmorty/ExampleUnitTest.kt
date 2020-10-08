@@ -1,4 +1,4 @@
-package com.adt.rickandmorty
+package com.mobileoak.rickandmorty
 
 import org.junit.Test
 
