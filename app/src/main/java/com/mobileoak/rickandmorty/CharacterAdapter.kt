@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class CharacterAdapter (var dataset: Array<Result>, val context: Context) :
+class CharacterAdapter (var dataset: List<Result>, val context: Context) :
     RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -52,8 +52,8 @@ class CharacterAdapter (var dataset: Array<Result>, val context: Context) :
         Glide.with(context).load(url).into(imageView)
     }
 
-    fun updateData(dataset: Array<Result>) {
-        this.dataset = dataset.copyOf()
+    fun updateData(dataset: List<Result>) {
+        this.dataset = dataset
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -3,29 +3,29 @@ package com.mobileoak.rickandmorty
 import android.content.Context
 import android.util.Log
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import java.lang.Exception
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
-class NetworkManager(private val context: Context, private val responseHandler: ResponseHandler) {
-    private final val TAG = NetworkManager::class.simpleName
+class NetworkManager(private val context: Context) {
+    private val TAG = NetworkManager::class.simpleName
+    private val queue = Volley.newRequestQueue(context)
+    private val url = "http://rickandmortyapi.com/api/character/"
 
-    fun requestCharacters() {
-        // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(context)
-        val url = "http://rickandmortyapi.com/api/character/"
-
-        // Request a string response from the provided URL.
-
+    suspend fun requestCharacters() = suspendCoroutine<Root> { cont ->
         val stringRequest = StringRequest(
             Request.Method.GET, url,
-            Response.Listener<String> { response ->
+            { response ->
                 val root = Gson().fromJson(response, Root::class.java)
-                responseHandler.onDataLoaded(root)
+                cont.resume(root)
             },
-            Response.ErrorListener {
+            {
                 Log.e(TAG, "That didn't work:" + it.networkResponse)
+                cont.resumeWithException(Exception(it.message))
             }
         )
 
